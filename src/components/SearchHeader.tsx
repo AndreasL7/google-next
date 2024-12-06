@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import React from "react";
+import React, { Suspense } from "react";
 import SearchBox from "./SearchBox";
 import { RiSettings3Line } from "react-icons/ri";
 import { TbGridDots } from "react-icons/tb";
@@ -21,7 +21,9 @@ const SearchHeader = () => {
           />
         </Link>
         <div className="flex-1">
-          <SearchBox />
+          <Suspense>
+            <SearchBox />
+          </Suspense>
         </div>
         <div className="hidden md:inline-flex space-x-2">
           <RiSettings3Line className="bg-transparent hover:bg-gray-200 p-2 text-4xl rounded-full cursor-pointer" />
@@ -31,7 +33,9 @@ const SearchHeader = () => {
           Sign in
         </button>
       </div>
-      <SearchHeaderOption />
+      <Suspense>
+        <SearchHeaderOption />
+      </Suspense>
     </header>
   );
 };

@@ -1,12 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import WebSearchResults from "@/components/WebSearchResults";
 
 interface SearchParamsProps {
-  searchParams: {
+  searchParams: Promise<{
     searchTerm: string;
     start: string;
-  };
+  }>;
 }
 
 interface SearchResult {
@@ -16,7 +16,7 @@ interface SearchResult {
   // Add additional properties based on your API response
 }
 
-const WebSearchPage = async ({ searchParams }: SearchParamsProps) => {
+const WebSearchPageContent = async ({ searchParams }: SearchParamsProps) => {
   const searchParamsAwaited = await searchParams;
   const startIndex = searchParamsAwaited.start || "1";
 
@@ -49,6 +49,14 @@ const WebSearchPage = async ({ searchParams }: SearchParamsProps) => {
   }
 
   return <div>{results && <WebSearchResults results={data} />}</div>;
+};
+
+const WebSearchPage = ({ searchParams }: SearchParamsProps) => {
+  return (
+    <Suspense>
+      <WebSearchPageContent searchParams={searchParams} />
+    </Suspense>
+  );
 };
 
 export default WebSearchPage;

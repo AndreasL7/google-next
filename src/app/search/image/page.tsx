@@ -1,12 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import ImageSearchResults from "@/components/ImageSearchResults";
 
 interface SearchParamsProps {
-  searchParams: {
+  searchParams: Promise<{
     searchTerm: string;
     start: string;
-  };
+  }>;
 }
 
 interface SearchResult {
@@ -16,7 +16,7 @@ interface SearchResult {
   // Add additional properties based on your API response
 }
 
-const ImageSearchPage = async ({ searchParams }: SearchParamsProps) => {
+const ImageSearchPageContent = async ({ searchParams }: SearchParamsProps) => {
   const searchParamsAwaited = await searchParams;
   const startIndex = searchParamsAwaited.start || "1";
 
@@ -48,7 +48,23 @@ const ImageSearchPage = async ({ searchParams }: SearchParamsProps) => {
     );
   }
 
-  return <div>{results && <ImageSearchResults results={data} />}</div>;
+  return (
+    <div>
+      {results && (
+        <Suspense>
+          <ImageSearchResults results={data} />
+        </Suspense>
+      )}
+    </div>
+  );
+};
+
+const ImageSearchPage = ({ searchParams }: SearchParamsProps) => {
+  return (
+    <Suspense>
+      <ImageSearchPageContent searchParams={searchParams} />
+    </Suspense>
+  );
 };
 
 export default ImageSearchPage;
