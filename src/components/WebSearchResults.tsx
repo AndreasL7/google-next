@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import Parser from "html-react-parser";
+import PaginationButtons from "./PaginationButtons";
 
 interface ResultsPropsItem {
   link: string;
@@ -21,7 +22,7 @@ interface ResultsProps {
 
 const WebSearchResults = ({ results }: ResultsProps) => {
   return (
-    <div className="w-full mx-auto px-3 pb-24 sm:pl-[5%] md:pl-[14%] lg:pl-52">
+    <div className="w-full mx-auto px-3 pb-40 sm:pb-24 sm:pl-[5%] md:pl-[14%] lg:pl-52">
       <p className="text-gray-600 text-sm mb-5 mt-3">
         About {results.searchInformation?.formattedTotalResults} results (
         {results.searchInformation?.formattedSearchTime} seconds)
@@ -40,6 +41,9 @@ const WebSearchResults = ({ results }: ResultsProps) => {
           <p className="text-gray-600">{Parser(result.htmlSnippet)}</p>
         </div>
       ))}
+      <Suspense>
+        <PaginationButtons />
+      </Suspense>
     </div>
   );
 };

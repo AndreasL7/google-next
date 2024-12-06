@@ -5,6 +5,7 @@ import ImageSearchResults from "@/components/ImageSearchResults";
 interface SearchParamsProps {
   searchParams: {
     searchTerm: string;
+    start: string;
   };
 }
 
@@ -17,8 +18,9 @@ interface SearchResult {
 
 const ImageSearchPage = async ({ searchParams }: SearchParamsProps) => {
   const searchParamsAwaited = await searchParams;
+  const startIndex = searchParamsAwaited.start || "1";
   const response = await fetch(
-    `https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}&cx=${process.env.CONTEXT_KEY}&q=${searchParamsAwaited.searchTerm}'}&searchType=image`
+    `https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}x&cx=${process.env.CONTEXT_KEY}&q=${searchParamsAwaited.searchTerm}'}&searchType=image&start=${startIndex}`
   );
 
   if (!response.ok) {
