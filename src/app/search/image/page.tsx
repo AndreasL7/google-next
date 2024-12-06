@@ -19,8 +19,11 @@ interface SearchResult {
 const ImageSearchPage = async ({ searchParams }: SearchParamsProps) => {
   const searchParamsAwaited = await searchParams;
   const startIndex = searchParamsAwaited.start || "1";
+
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
   const response = await fetch(
-    `https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}x&cx=${process.env.CONTEXT_KEY}&q=${searchParamsAwaited.searchTerm}'}&searchType=image&start=${startIndex}`
+    `https://www.googleapis.com/customsearch/v1?key=${process.env.API_KEY}&cx=${process.env.CONTEXT_KEY}&q=${searchParamsAwaited.searchTerm}'}&searchType=image&start=${startIndex}`
   );
 
   if (!response.ok) {
