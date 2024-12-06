@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
 
 interface ResultPropsItem {
   link: string;
@@ -25,12 +25,13 @@ const ImageSearchResults = ({ results }: ResultsProps) => {
           <div className="mb-8" key={result.link}>
             <div className="group">
               <Link href={result.image.contextLink}>
-                <img
+                <Image
                   src={result.link}
                   alt={result.title}
                   width={300}
                   height={300}
                   className="h-60 group-hover:shadow-xl w-full object-contain transition-shadow duration-300"
+                  unoptimized
                 />
               </Link>
               <Link href={result.image.contextLink}>
