@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import WebSearchResults from "@/components/WebSearchResults";
 
 interface SearchParamsProps {
   searchParams: {
@@ -42,14 +43,7 @@ const WebSearchPage = async ({ searchParams }: SearchParamsProps) => {
     );
   }
 
-  return (
-    <div>
-      {results &&
-        results.map((result: SearchResult, idx) => (
-          <h1 key={idx}>{result.title}</h1>
-        ))}
-    </div>
-  );
+  return <div>{results && <WebSearchResults results={data} />}</div>;
 };
 
 export default WebSearchPage;

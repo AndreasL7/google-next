@@ -4,10 +4,9 @@ import React, { useEffect } from "react";
 
 interface ErrorProps {
   error: Error;
-  reset: () => void;
 }
 
-const Error = ({ error, reset }: ErrorProps) => {
+const Error = ({ error }: ErrorProps) => {
   useEffect(() => {
     console.log(error);
   }, [error]);
